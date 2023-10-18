@@ -1,10 +1,10 @@
 ---
-title: 'BioHackEU23 report: Enabling FAIR Digital Objects with RO-Crates, Signposting and Bioschemas'
+title: 'BioHackEU23 report: Enabling FAIR Digital Objects with RO-Crate, Signposting and Bioschemas'
 title_short: 'BioHackEU23 #15: Enabling FAIR Digital Objects'
 tags:
-  - cheminformatics
-  - PubChem
-  - unknown chemical substances
+  - RO-Crate
+  - Signposting
+  - Bioschemas
 authors:
   - name: Stian Soiland-Reyes
     affiliation: [3, 4]
@@ -38,7 +38,7 @@ authors_short: First Author \emph{et al.}
 
 # Introduction
 
-As part of the BioHackathon Europe 2022, we here report...
+As part of the BioHackathon Europe 2023, we here report...
 
 # Formatting
 
