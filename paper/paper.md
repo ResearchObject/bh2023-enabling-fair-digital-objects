@@ -1,13 +1,14 @@
 ---
-title: 'BioHackEU22 Template'
-title_short: 'BioHackEU22 #26: unknown chemical substances'
+title: 'BioHackEU23 report: Enabling FAIR Digital Objects with RO-Crates, Signposting and Bioschemas'
+title_short: 'BioHackEU23 #15: Enabling FAIR Digital Objects'
 tags:
   - cheminformatics
   - PubChem
   - unknown chemical substances
 authors:
-  - name: First Author
-    affiliation: 1
+  - name: Stian Soiland-Reyes
+    affiliation: [3, 4]
+    orcid: 0000-0001-9842-9718
   - name: Last Author
     orcid: 0000-0000-0000-0000
     affiliation: 2
@@ -16,15 +17,19 @@ affiliations:
     index: 1
   - name: Second Affiliation
     index: 2
-date: 8 November 2022
+  - name: Department of Computer Science, The University of Manchester, Manchester, UK
+    index: 3
+  - name: Informatics Institute, University of Amsterdam, Amsterdam, NL
+    index: 4    
+date: 3 November 2023
 cito-bibliography: paper.bib
-event: BH22EU
-biohackathon_name: "BioHackathon Europe 2022"
+event: BH23EU
+biohackathon_name: "BioHackathon Europe 2023"
 biohackathon_url:   "https://biohackathon-europe.org/"
-biohackathon_location: "Paris, France, 2022"
-group: Project 26
+biohackathon_location: "Barcelona, Spain, 2022"
+group: Project 15
 # URL to project git repo --- should contain the actual paper.md:
-git_url: https://github.com/biohackrxiv/publication-template
+git_url: https://github.com/ResearchObject/bh2023-enabling-fair-digital-objects
 # This is the short authors description that is used at the
 # bottom of the generated paper (typically the first two authors):
 authors_short: First Author \emph{et al.}
