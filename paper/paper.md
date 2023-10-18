@@ -46,7 +46,7 @@ affiliations:
     index: 2
   - name: ZBMED Information Centre for life sciences, Cologne, DE
     index: 3
-  - name:  Senckenberg – Leibniz Institution for Biodiversity and Earth System Research: Frankfurt/M, Hessen, DE
+  - name:  "Senckenberg – Leibniz Institution for Biodiversity and Earth System Research: Frankfurt/M, Hessen, DE"
     index: 4
   - name: Your Affiliation
     index: 5
