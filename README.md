@@ -1,4 +1,4 @@
-# BioHackrXiv Publication Template
+# BioHackrXiv BioHackEU23 report: Enabling FAIR Digital Objects with RO-Crate, Signposting and Bioschemas
 
 This is repository for a [preprint](paper/paper.md) being developed for [ELIXIR Biohackathon 2023](https://biohackathon-europe.org/) project [15: Enabling FAIR Digital Objects with RO-Crate, Signposting and Bioschemas](https://github.com/elixir-europe/biohackathon-projects-2023/tree/main/15).
 
