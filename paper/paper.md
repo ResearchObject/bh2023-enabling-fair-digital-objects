@@ -12,11 +12,8 @@ authors:
   - name: Leyla Jael Castro
     orcid: 0000-0003-3986-0510
     affiliation: 3
-  - name: Rohitha Ravinder (?)
+  - name: Rohitha Ravinder
     orcid: 0009-0004-4484-6283
-    affiliation: 3
-  - name: Lukas Geist (?)
-    orcid: 0000-0002-2910-7982
     affiliation: 3
   - name: Claus Weiland
     affiliation: 4
@@ -24,15 +21,6 @@ authors:
   - name: Jonas Grieb
     affiliation: 4
     orcid: 0000-0002-8876-1722
-  - name: Alexander Rogers (?)
-    affiliation: 6
-    orcid: 0000-0002-4283-6135
-  - name: Oussama Mohammed Benhamed?
-    affiliation: 0
-    orcid: 0000-0000-0000-0000
-  - name: .. You!
-    orcid: 0000-0000-0000-0000
-    affiliation: 5
   - name: Christophe Blanchi
     affiliation: 9
     orcid: 0000-0003-2277-5176
@@ -48,8 +36,6 @@ affiliations:
     index: 3
   - name:  "Senckenberg – Leibniz Institution for Biodiversity and Earth System Research: Frankfurt/M, Hessen, DE"
     index: 4
-  - name: Your Affiliation
-    index: 5
   - name: EMBL-EBI, Hinxton, UK
     index: 6
   - name: DONA foundation, Geneva, CH
