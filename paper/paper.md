@@ -21,6 +21,9 @@ authors:
   - name: Jonas Grieb
     affiliation: 4
     orcid: 0000-0002-8876-1722
+  - name: Alexander Rogers
+    affiliation: 6
+    orcid: 0000-0002-4283-6135
   - name: Christophe Blanchi
     affiliation: 9
     orcid: 0000-0003-2277-5176
