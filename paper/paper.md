@@ -24,9 +24,9 @@ authors:
   - name: Jonas Grieb
     affiliation: 4
     orcid: 0000-0002-8876-1722
-  - name: Sandy Rogers (?)
-    affiliation: 0
-    orcid: 0000-0000-0000-0000
+  - name: Alexander Rogers (?)
+    affiliation: 6
+    orcid: 0000-0002-4283-6135
   - name: Oussama Mohammed Benhamed?
     affiliation: 0
     orcid: 0000-0000-0000-0000
@@ -50,6 +50,8 @@ affiliations:
     index: 4
   - name: Your Affiliation
     index: 5
+  - name: EMBL-EBI, Hinxton, UK
+    index: 6
   - name: DONA foundation, Geneva, CH
     index: 9
   - name: DANS, The Hague, NL
