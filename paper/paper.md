@@ -161,6 +161,18 @@ Possible CiTO typing annotation include:
 
 # Results
 
+## Visualising Signposting
+Signposting is explicitly designed to add machine-readable links to the metadata associated with a human-readable scholarly object.
+Taking the canonical example of a web landing page for a dataset, which humans parse as rendered HTML, Signposting adds invisible links to remote resources like an ORCID profile of the author, a DOI the resource can be cited as, and downloadable items of the dataset like images and data tables.
+These are implemented as HTTP headers (`Link: <https://orcid.org/0000>; rel="author"`) or HTML header link tags (`<link href="https://doi.org/10.5281/zenodo..." rel="item" type="application/zip"/>`).
+
+Typically, these implementations do not render anything that a user of the landing page will see (without using developer tools to inspect the source of the material they're viewing).
+This means that resource authors and developers need to use debugging tools to develop and test their implementations of Signposting: for example browser developer tools, or bespoke parsers for the Signposting headers [@citesAsPotentialSolution:Signposting_link_parser].
+It also means that users discovering data resources with a view to then accessing them programatically, for example in a new pipeline or data ingestion process, will need to find the links to programmatic access options by browsing the web pages and documentation, rather than following the same shortcuts that robot agents can see.
+
+During BioHackathon Europe 2023 we developed a browser extension, initially targetting Chromium-based browsers, to render Signposting links as a visible bar on landing pages.
+This helps resource developers to quickly verify their Signposting implementations and notifies resource users to the possible citation, contact, and programmatic access options they might use.
+
 
 # Discussion
 
