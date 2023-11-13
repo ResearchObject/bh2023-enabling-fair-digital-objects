@@ -5,6 +5,7 @@ tags:
   - RO-Crate
   - Signposting
   - Bioschemas
+  - FAIR Digital Object
 authors:
   - name: Stian Soiland-Reyes
     affiliation: [1,2]
@@ -37,7 +38,7 @@ affiliations:
     index: 2
   - name: ZBMED Information Centre for life sciences, Cologne, DE
     index: 3
-  - name:  "Senckenberg – Leibniz Institution for Biodiversity and Earth System Research: Frankfurt/M, Hessen, DE"
+  - name:  Senckenberg – Leibniz Institution for Biodiversity and Earth System Research, Frankfurt/M, DE
     index: 4
   - name: EMBL-EBI, Hinxton, UK
     index: 6
