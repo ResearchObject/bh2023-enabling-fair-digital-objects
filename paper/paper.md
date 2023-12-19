@@ -36,7 +36,7 @@ affiliations:
     index: 1
   - name: Informatics Institute, University of Amsterdam, Amsterdam, NL
     index: 2
-  - name: ZBMED Information Centre for life sciences, Cologne, DE
+  - name: ZB MED Information Centre for life sciences, Cologne, DE
     index: 3
   - name:  Senckenberg – Leibniz Institution for Biodiversity and Earth System Research, Frankfurt/M, DE
     index: 4
@@ -65,8 +65,6 @@ authors_short: Stian Soiland-Reyes \emph{et al.}
 
 As part of the BioHackathon Europe 2023, we here report from the progress of the hackathon project #15: "Enabling FAIR Digital Objects with RO-Crate, Signposting and Bioschemas". 
 
-# Background
-
 [RO-Crate](https://www.researchobject.org/ro-crate/) [@citesAsAuthority:10.3233/ds-210053] is a lightweight method to package research outputs along with their metadata. [Bioschemas](https://bioschemas.org/) [@citesAsAuthority:Bioschemas] provides metadata schemas to add structured metadata to webpages on Life Science. [Signposting](https://signposting.org/FAIR/) [@citesAsAuthority:vandesompelFAIRSignpostingProfile2022] [@extends:vandesompel2015]  provides a lightweight yet powerful approach to increase the FAIRness of scholarly objects.
 
 The combination of RO-Crates, Bioschemas and Signposting make resources easy to navigate by machines, provide an unambiguous way for machines to access FAIR metadata and content in a single request, and reduce content-negotiation hassle that can give unpredictable results [@citesAsAuthority:10.3897/rio.8.e93937].
@@ -75,7 +73,7 @@ This tripartite combination is of benefit for repositories and publishers as the
 
 FAIR tooling implementers can also benefit as they could create, improve or integrate Signposting clients combined with RO-Crate libraries implementing Bioschemas specifications. On its side, FAIR data implementers could support consumption of FAIR Signposting and create Knowledge Graphs from RO-Crates.
 
-While Bioschemas has been adapted by many repositories, the methods for its consumption have largely been focused on discoverability. Now we focus on integrations, such as building scholarly knowledge graphs from multiple Bioschemas sources.
+While Bioschemas has been adopted by many repositories, the methods for its consumption have largely been focused on discoverability. Now we focus on integrations, such as building scholarly knowledge graphs from multiple Bioschemas sources.
 
 Finally, FAIR outreach practitioners showcase uses of FAIR Signposting to navigate and consume RO-Crates making FAIR closer to the community. This project will continue the effort started as part of FDO2022 [@discusses:looFirstInternationalConference2022] and FAIR-IMPACT to enable FAIR Signposting and RO-Crate for content/metadata discovery and consumption.
 
@@ -243,12 +241,16 @@ With this, we managed to add Signposting HTTP headers to an existing SPA-based d
 
 Figure 2: Schematic overview of how Signposting headers are added to the HTTP response in NGINX
 
+## Implementing RO Crates and Sigposting in GitHub pages
+The [Semantic Technologies (SemTec) team](https://zbmed-semtec.github.io/) in [ZB MED](https://www.zbmed.de/en/) uses GitHub pages to share research projects and corresponding research artefacts/outcomes (e.g., datasets, software, metadata schemas/ontologies, posters, reports, preprints, scholarly publications). The pages embed Bioschemas and [schema.org](https://schema.org/) markup to facilitate findability and connectivity of the research outcomes. The goal behind implementing RO-Crates and Signposting is supporting a lightweight approach to FAIR Digital Objects (FDOs) [@citesAsPotentialSolution:Soiland_FDO_2022] [@citesAsPotentialSolution:Castro_FDO_2023]. The FDO approach [@citesAsAuthority:Smedt_FDO_2020] corresponds to a series of recommendations to increase and extend FAIRness to cover typed operations, allowing implementation via different compliant configurations [@citesAsAuthority:Lannon_FDOConfig_2022]. This work was initiated as part of a FAIR-Impact Support Action and advanced to an initial implementation during the BioHackathon. As a result, the SemTec team now supports RO-crates for research projects and theses with Signposting level 2.
 
-# Discussion
-
-...
+# Conclusion and Future Work
+He have presented here various approaches to implement RO-Crates and Signposting, some of them also supporting Bioschemas markup. This combination aims at improving interoperability and reusability. The ZB MED SemTec team will get permanent, unique and global identifiers for the RO-Crates and the corresponding GitHub pages to improve FDO compliance, it will also add software to the research artefacts implementing RO-crate. 
 
 ## Acknowledgements
+The work corresponding to the ZB MED SemTec team pages has been partially supported by the NFDI4DataScience project funded by the German Research Foundation (DFG) (no. 460234259), and the FAIR-Impact GA 101057344 Support Action #2: Enabling FAIR Signposting and RO-Crate for content/metadata discovery and consumption. 
+
+We also acknowledge the ELIXIR BioHackathon Europe 2023
 
 
 
