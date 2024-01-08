@@ -71,7 +71,7 @@ The combination of RO-Crates, Bioschemas and Signposting make resources easy to 
 
 This tripartite combination is of benefit for repositories and publishers as they can non-disruptively add FAIR Signposting headers for machine navigation, support RO-Crate imports and align with Bioschemas specifications, making FAIR Digital Objects achievable with existing technologies over HTTP [@citesAsAuthority:10.3897/rio.8.e94501].
 
-FAIR tooling implementers can also benefit as they could create, improve or integrate Signposting clients combined with RO-Crate libraries implementing Bioschemas specifications. On its side, FAIR data implementers could support consumption of FAIR Signposting and create Knowledge Graphs from RO-Crates.
+FAIR tooling implementers can also benefit, as they could create, improve or integrate Signposting clients combined with RO-Crate libraries implementing Bioschemas specifications. On its side, FAIR data implementers could support consumption of FAIR Signposting and create Knowledge Graphs from RO-Crates.
 
 While Bioschemas has been adopted by many repositories, the methods for its consumption have largely been focused on discoverability. Now we focus on integrations, such as building scholarly knowledge graphs from multiple Bioschemas sources.
 
@@ -187,14 +187,15 @@ The implementation of this RO-Crate layer on top of the existing data portal was
 
 The difficulty in adding Signposting to the Wildlive data portal was in that the portal was built as a [Single Page Application](https://en.wikipedia.org/wiki/Single-page_application)(SPA), based on [VueJS](https://vuejs.org/). This means that upon a request from a client (usually a web browser), the server returns a generic, static HTML file and JavaScript code. Afterwards, the code is executed in the browser and the content-specific data is loaded asynchronously via API calls to the backend of the application. To implement Signposting, links to related web resources of a website can either be added to the HTML header or to the header of the HTTP response of the server. However, to add these links, content-specific metadata is required which is not yet available when the server initially answers the client's request.
 This problem is comparable to the problem that many SPA-based websites have which seek to add specific metadata markup to their websites HTML to achieve search engine optimization. Typical solutions to this problem are the implementation of a server-side rendering or pre-rendering step based on an additional NodeJS-based webserver in the backend of the application. During this step, some parts or all of the HTML are being rendered on the side of the server (which allows to add metadata markup e.g. for search engine crawlers but also for Signposting), before the SPA is delivered to the client.
+![Single Page application of Wildlive portal showing a capture event, with Signposting overlaid by the signposting-chrome-exten
 
-![Single Page application of Wildlive portal showing a capture event, with Signposting overlaid by the signposting-chrome-extension](./figures/signposting-senckenberg.png)
+![Single Page application of Wildlive portal showing a capture event, with Signposting overlaid by the signposting-chrome-extension.](./figures/signposting-senckenberg.png)
 
 However, typical solutions like adding server-side rendering were not feasible to add to the existing Wildlive data portal because they require a lot of changes on the application's code structure itself. Instead, we came up with a lightweight method to add Signposting to the landing pages of the camera trap observations. For this, we made use of the fact that Signposting links must not necessarily be included in the HTML header, but are also allowed to be only transported via the HTTP `Link` header (unlike for search engine optimization where the content-specific markup must be in the HTML that a client receives). The Wildlive data portal, like many other SPA-based websites, is based on a lightweight webserver, in this case [NGINX](https://nginx.org/), which serves the static files of the website. NGINX with the addional `nginx-module-njs` allows to add custom scripting based on JavaScript code to the webserver configuration. Therefore, we added a custom script which upon a request to the frontend landing page of a certain observation dataset, makes an internal request to the API to retrieve the content-specific metadata. Based on this metadata, the correct Signposting links are generated and added to the HTTP response which returns the static HTML to the client (see Fig. 2).
 
 With this, we managed to add Signposting HTTP headers to an existing SPA-based data portal, without having to change any application code of the data portal. A drawback is that in this setup the API receives two requests, one to build the Signposting headers before responding the client's request, and one later when the application is loaded asynchronously in the client browser (in the case that the request has not been made by a machine-agent without a browser).
 
-![Schematic overview of how Signposting headers are added to the HTTP response in NGINX](./figures/signposting-nginx-architecture.png)
+![Schematic overview of how Signposting headers are added to the HTTP response in NGINX.](./figures/signposting-nginx-architecture.png)
 
 
 ## Hybrid FDO using Handles and Signposting
@@ -203,12 +204,12 @@ As an experiment of a hybrid deployment of FDOs with a Signposting/RO-Crate over
 
 The handle <https://hdl.handle.net/21.T11998/wildlive.7df91e6d148a386cc674> was minted manually using the EOSC B2Handle test service. Senckenberg plans to deploy their own Handle server to mint persistent identifiers automatically for every digital object using their own Handle prefix and Cordra's Handle support.  From the FDO principle that metadata FDOs can be separate from the main FDO, a separate handle <https://hdl.handle.net/21.T11998/wildlive.crate.7df91e6d148a386cc674> was registered for the corresponding RO-Crate. 
 
-![HTML preview rendering of the Wildlive RO-Crate for a capture event. Each observation event is listed as `hasPart` and described further](./figures/signposting-crate.png)
+![HTML preview rendering of the Wildlive RO-Crate for a capture event. Each observation event is listed as `hasPart` and described further.](./figures/signposting-crate.png)
 
 Another reason for having a separate PID for the RO-Crate is that it is on higher level than the fairly granular digital objects underlying it, for instance in the traditional Digital Object JSON APIs for <https://wildlive.senckenberg.de/api/objects/wildlive/7df91e6d148a386cc674> we have implied references to `wildlive/38a8bb080a5e48fdd309` (aka <https://wildlive.senckenberg.de/api/objects/wildlive/38a8bb080a5e48fdd309>) as nested objects for each observation, which then again has an image object <https://wildlive.senckenberg.de/api/objects/wildlive/ffafa0893d4a2af6d0ba>. However in the corresponding RO-Crate, all of these objects are described together, avoiding multiple API calls.  
 
 
-![The same crate also describes nested objects, such as the taxon for identifying species](./figures/signposting-taxon.png).
+![The same crate also describes nested objects, such as the taxon for identifying species.](./figures/signposting-taxon.png).
 
 It is notable that in Senckenberg's particular case, the JSON of the FDO objects in the API are already also valid JSON-LD, but using a mixture of vocabularies mapped from a [JSON context](https://wildlive.senckenberg.de/api/objects/wildlive/basecontext.jsonld), including [Darwin Core](https://dwc.tdwg.org/) and [Semantic Sensor Network Ontology](https://www.w3.org/TR/vocab-ssn/). In this case the RO-Crate is an example of a higher-level mapping using a common vocabulary (schema.org), with an domain-specific API co-existing for when additional details are needed.
 
@@ -233,7 +234,7 @@ Lessons learnt include:
 
 The [Semantic Technologies (SemTec) team](https://zbmed-semtec.github.io/) in [ZB MED](https://www.zbmed.de/en/) uses GitHub pages to share research projects and corresponding research artefacts/outcomes (e.g., datasets, software, metadata schemas/ontologies, posters, reports, preprints, scholarly publications). The pages embed Bioschemas and [schema.org](https://schema.org/) markup to facilitate findability and connectivity of the research outcomes. The goal behind implementing RO-Crates and Signposting is supporting a lightweight approach to FAIR Digital Objects (FDOs) [@citesAsPotentialSolution:Soiland_FDO_2022] [@citesAsPotentialSolution:Castro_FDO_2023]. The FDO approach [@citesAsAuthority:Smedt_FDO_2020] corresponds to a series of recommendations to increase and extend FAIRness to cover typed operations, allowing implementation via different compliant configurations [@citesAsAuthority:Lannon_FDOConfig_2022]. This work was initiated as part of a FAIR-Impact Support Action and advanced to an initial implementation during the BioHackathon. As a result, the SemTec team now supports RO-crates for research projects and theses with Signposting level 2.
 
-![ZBMed web page with HTML Signposting to the RO-Crate metadata file along with the Bioschemas JSON-LD](./figures/signposting-zbmed.png)
+![ZBMed web page with HTML Signposting to the RO-Crate metadata file along with the Bioschemas JSON-LD.](./figures/signposting-zbmed.png)
 
 For instance, the page <https://zbmed-semtec.github.io/projects/2022_maSMP/> has signposting to the RO-Crate metadata file <https://zbmed-semtec.github.io/metadata/projects/2022_maSMP/ro-crate-metadata.json> (with corresponding [ro-crate-preview.html](https://zbmed-semtec.github.io/metadata/projects/2022_maSMP/ro-crate-preview.html)).  The page also has signposting to the existing Bioschemas JSON-LD markup, which don't follow the RO-Crate profile (as it do not have a top level root dataset), machines can tell the difference by inspecting the `profile` argument.
 
