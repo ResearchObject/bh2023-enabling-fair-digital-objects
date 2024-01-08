@@ -245,7 +245,7 @@ We have presented here various approaches to implement RO-Crates and Signposting
 
 The work corresponding to the ZB MED SemTec team pages has been partially supported by the NFDI4DataScience project funded by the German Research Foundation (DFG) (no. 460234259), and the FAIR-Impact GA 101057344 Support Action #2: Enabling FAIR Signposting and RO-Crate for content/metadata discovery and consumption. Work corresponding to the Senckenberg team has been partially supported by Biodiversity Digital Twin for Advanced Modelling, Simulation and Prediction Capabilities ([BioDT](https://biodt.eu/)) (Horizon Europe, GA no. 101057437), and [NFDI4Earth](https://www.nfdi4earth.de/) - NFDI Consortium Earth System Sciences (DFG, no. 460036893). Work with handles has been supported by UK Research and Innovation (UKRI) under the UK government's Horizon Europe funding guarantee for 10038930 ([BioDT](https://biodt.eu/)) 10038963 ([EuroScienceGateway](https://eurosciencegateway.eu/)), 10038992 ([FAIR-IMPACT](http://fair-impact.eu/)) and by Horizon Europe GA 101046203 ([BY-COVID](https://by-covid.org/)).
 
-We also acknowledge the many ELIXIR BioHackathon Europe 2023 participants we interacted with.
+We also acknowledge the many ELIXIR BioHackathon Europe 2023 participants we interacted with. This work was [presented](https://slides.com/soilandreyes/2023-11-13-bh2023-fdo) at an FDO meeting 2023-11-13 and we are grateful for the discussion there which further informed this paper.
 
 
 # References
