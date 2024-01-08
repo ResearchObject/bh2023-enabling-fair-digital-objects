@@ -213,7 +213,7 @@ Lessons learnt include:
 
 1. User in focus. Make sure human browsers get HTML from a PID (use `10320/LOC` mechanism to register both API and HTML resolution)
 2. Use full <https://hdl.handle.net/> URIs for handle references, not partial identifiers like `wildlive/38a8bb080a5e48fdd309` -- however doing this on server-side puts a stronger requirement to get easy access to production-level handle servers in advance.
-3. A profile for profiles are needed. It is still too unclear how to express a profile. JSON Schema kind-a works but is rudimentary. RO-Crate specify (sub)profile inside itself (which may be to a [Profile Crate](https://www.researchobject.org/ro-crate/1.2-DRAFT/profiles#profile-crate)). Should sub-profiles also be listed in the PID and Signposting?
+3. A profile-for-profiles are needed. It is still too unclear how to express a profile. JSON Schema kind-a works but is rudimentary. RO-Crate specify (sub)profile inside itself (which may be to a [Profile Crate](https://www.researchobject.org/ro-crate/1.2-DRAFT/profiles#profile-crate)). Should sub-profiles also be listed in the PID and Signposting?  For the higher granularity FDO API, we assume the profile will point to the corresponding JSON Sehema, e.g. <https://hdl.handle.net/21.T11998/b93260a5-a6c3-4db7-9b66-a093f842a6c6> but this definition needs a profile-for-profile to indicate it is a JSON Schema.
 4.  Granularity varies. The FDOs may be fine-grained (e.g. to support their operations), and an RO-Crate should make sense on its own -- augment with metadata from compound FDOs.
 
 
