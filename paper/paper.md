@@ -94,21 +94,24 @@ Our initial plan was to work in several parallell streams:
 
 Given the participant in this project we focused on three main streams:
 
-1. Adding and visualising Signposting to existing resources: two repositories and a web site. 
+1. Adding and visualising Signposting to existing resources: two repositories () and a web site. 
 2. Adding RO-Crate to existing resources, a repository and a website
 3. Explore using an FDO/Web hybrid with persistent identifers as Handles.
 
 ## Visualising Signposting
-Signposting is explicitly designed to add machine-readable links to the metadata associated with a human-readable scholarly object.
+
+[Signposting](https://signposting.org/) is explicitly designed to add machine-readable links to the metadata associated with a human-readable scholarly object.
 Taking the canonical example of a web landing page for a dataset, which humans parse as rendered HTML, Signposting adds invisible links to remote resources like an ORCID profile of the author, a DOI the resource can be cited as, and downloadable items of the dataset like images and data tables.
-These are implemented as HTTP headers (`Link: <https://orcid.org/0000>; rel="author"`) or HTML header link tags (`<link href="https://doi.org/10.5281/zenodo..." rel="item" type="application/zip"/>`).
+These are implemented as HTTP headers (`Link: <https://orcid.org/0000…">; rel="author"`) or HTML header link tags (`<link href="https://doi.org/10.5281/zenodo…" rel="item" type="application/zip"/>`).
 
 Typically, these implementations do not render anything that a user of the landing page will see (without using developer tools to inspect the source of the material they're viewing).
 This means that resource authors and developers need to use debugging tools to develop and test their implementations of Signposting: for example browser developer tools, or bespoke parsers for the Signposting headers [@citesAsPotentialSolution:Signposting_link_parser].
 It also means that users discovering data resources with a view to then accessing them programatically, for example in a new pipeline or data ingestion process, will need to find the links to programmatic access options by browsing the web pages and documentation, rather than following the same shortcuts that robot agents can see.
 
-During BioHackathon Europe 2023 we developed a browser extension, initially targetting Chromium-based browsers, to render Signposting links as a visible bar on landing pages.
+During BioHackathon Europe 2023 we developed a browser extension [signposting-chrome-extension](https://github.com/SandyRogers/signposting-chrome-extension), initially targetting Chromium-based browsers, to render Signposting links as a visible bar on landing pages.
 This helps resource developers to quickly verify their Signposting implementations and notifies resource users to the possible citation, contact, and programmatic access options they might use.
+
+As an experiment we modified the [HoloFood Data Portal](www.holofooddata.org) to include Signposting HTTP headers to its own API exposure of JSON metadata. As these are following the [site-specific OpenAPI](https://www.holofooddata.org/api/openapi.json) we used this as the `profile` identifier. This is an example of how Signposting can help machine-clients navigate from human-readable web-pages to machine-readable APIs even if no further FAIRifications have not yet been applied (e.g. persistent identifiers, metadata following common vocabularies), in effect making a "level 0" FDO.
 
 ![The HoloFood Data Portal (www.holofooddata.org) now includes machine-readable Signposting links directing clients to the API for a JSON description of the each Sample as well as the collection to which the Sample belongs. The browser extension is shown here rendering these Signposts to the user.](./figures/signposting-browser-extension.jpg)
 
@@ -189,17 +192,43 @@ With this, we managed to add Signposting HTTP headers to an existing SPA-based d
 ![Schematic overview of how Signposting headers are added to the HTTP response in NGINX](./figures/signposting-nginx-architecture.png)
 
 
+## Hybrid FDO using Handles and Signposting
+
+As an experiment of a hybrid deployment of FDOs with a Signposting/RO-Crate overlay, we augmented the Wildlive as it is built on Cordra (which has FDO support using DOIP [@citesAsPotentialSolution:tupelo-schneckrobertBriefIntroductionCordra2022]). We experimented with minting persistent identifiers as Handles that also included the FDO kernel metadata [@citesAsPotentialSolution:fdo-KernelAttributes] in the PID record -- that is in the Handle key/value pairs. 
+
+The handle <https://hdl.handle.net/21.T11998/wildlive.7df91e6d148a386cc674> was minted manually using the EOSC B2Handle test service. Senckenberg plans to deploy their own Handle server to mint persistent identifiers automatically for every digital object using their own Handle prefix and Cordra's Handle support.  From the FDO principle that metadata FDOs can be separate from the main FDO, a separate handle <https://hdl.handle.net/21.T11998/wildlive.crate.7df91e6d148a386cc674> was registered for the corresponding RO-Crate. Another reason for having a separate PID for the RO-Crate is that it is on higher level than the fairly granular digital objects underlying it, for instance in the traditional Digital Object JSON APIs for <https://wildlive.senckenberg.de/api/objects/wildlive/7df91e6d148a386cc674> we have implied references to `wildlive/38a8bb080a5e48fdd309` (aka <https://wildlive.senckenberg.de/api/objects/wildlive/38a8bb080a5e48fdd309>) as nested objects for each observation, which then again has an image object <https://wildlive.senckenberg.de/api/objects/wildlive/ffafa0893d4a2af6d0ba>. However in the corresponding RO-Crate, all of these objects are described together, avoiding multiple API calls.  
+
+It is notable that in Senckenberg's particular case, the JSON of the FDO objects in the API are already also valid JSON-LD, but using a mixture of vocabularies mapped from a [JSON context](https://wildlive.senckenberg.de/api/objects/wildlive/basecontext.jsonld), including [Darwin Core](https://dwc.tdwg.org/) and [Semantic Sensor Network Ontology](https://www.w3.org/TR/vocab-ssn/). In this case the RO-Crate is an example of a higher-level mapping using a common vocabulary (schema.org), with an domain-specific API co-existing for when additional details are needed.
+
+In a completed hybrid FDO implementation, each of these nested objects would again have their own handles, which would also be reflected in the common RO-Crate using `identifier` property, and with FAIR Signposting as cross-reference navigating between the web page (which shows navigation of the observation images), the RO-Crate, and each of the API objects. 
+
+In this experiment we identified some issues with the Handle/FDO approach: 
+
+1. Unclear which Handle property to use to indicate fdo profile. `fdoProfile` was chosen, in correspondance with the [DISSCo kernel attributes](https://docs.google.com/document/d/1hj5M9Cko5LduDv1H8CUYdGocg_B3YUf6MafoZPHPaec), and stored at handle index `1`. The profile is pointing to <https://w3id.org/ro/crate> which is registered in the [IANA profile registry](https://www.iana.org/assignments/profile-uris/) and corresponds to the `profile=` signposting parameter.  Ideally the key for this should itstead be a full PID or defined by the FDO specification, for comparison the [BioDT Kernel attributes](https://github.com/BioDT/biodt-fair/discussions/3) are defining the key `profile` but also in index `1``.
+2. Requesting the B2Handle service from the [EOSC marketplace](https://marketplace.eosc-portal.eu/services/eosc.eudat.b2handle) ws very slow, taking several weeks before the hackathon, only to be given access to a buggy test prefix server with various SSL deployment problems and inability to update a handle after registration. The B2Handle helpdesk was however very helpful.
+3. Unclear if index in the Handle record matters -- both DiSSCO and BioDT use the indexes as a way to organize the keys, but these can of course then be in conflict.
+4. Unclear how much of the FDO metadata should be duplicated in the handle. We didn't experiment with mapping and registering the full DiSSCO or BioDT handle kernel information, but stayed at a Signposting-like level of persistent identifiers, metadata resources, and profiles of those.
+
+Lessons learnt include:
+
+1. User in focus. Make sure human browsers get HTML from a PID (use `10320/LOC` mechanism to register both API and HTML resolution)
+2. Use full <https://hdl.handle.net/> URIs for handle references, not partial identifiers like `wildlive/38a8bb080a5e48fdd309` -- however doing this on server-side puts a stronger requirement to get easy access to production-level handle servers in advance.
+3. A profile for profiles are needed. It is still too unclear how to express a profile. JSON Schema kind-a works but is rudimentary. RO-Crate specify (sub)profile inside itself (which may be to a [Profile Crate](https://www.researchobject.org/ro-crate/1.2-DRAFT/profiles#profile-crate)). Should sub-profiles also be listed in the PID and Signposting?
+4.  Granularity varies. The FDOs may be fine-grained (e.g. to support their operations), and an RO-Crate should make sense on its own -- augment with metadata from compound FDOs.
+
+
 ## Implementing RO Crates and Sigposting in GitHub pages
 
 The [Semantic Technologies (SemTec) team](https://zbmed-semtec.github.io/) in [ZB MED](https://www.zbmed.de/en/) uses GitHub pages to share research projects and corresponding research artefacts/outcomes (e.g., datasets, software, metadata schemas/ontologies, posters, reports, preprints, scholarly publications). The pages embed Bioschemas and [schema.org](https://schema.org/) markup to facilitate findability and connectivity of the research outcomes. The goal behind implementing RO-Crates and Signposting is supporting a lightweight approach to FAIR Digital Objects (FDOs) [@citesAsPotentialSolution:Soiland_FDO_2022] [@citesAsPotentialSolution:Castro_FDO_2023]. The FDO approach [@citesAsAuthority:Smedt_FDO_2020] corresponds to a series of recommendations to increase and extend FAIRness to cover typed operations, allowing implementation via different compliant configurations [@citesAsAuthority:Lannon_FDOConfig_2022]. This work was initiated as part of a FAIR-Impact Support Action and advanced to an initial implementation during the BioHackathon. As a result, the SemTec team now supports RO-crates for research projects and theses with Signposting level 2.
 
 # Conclusion and Future Work
-We have presented here various approaches to implement RO-Crates and Signposting, some of them also supporting Bioschemas markup. This combination aims at improving interoperability and reusability. The ZB MED SemTec team will get permanent, unique and global identifiers for the RO-Crates and the corresponding GitHub pages to improve FDO compliance, it will also add software to the research artefacts implementing RO-crate. 
+We have presented here various approaches to implement RO-Crates and Signposting, some of them also supporting Bioschemas markup. This combination aims at improving interoperability and reusability. The ZB MED SemTec team will get permanent, unique and global identifiers for the RO-Crates and the corresponding GitHub pages to improve FDO compliance, it will also add software to the research artefacts implementing RO-crate. The experiments with hybruid FDOs show how Signposting and RO-Crate can co-exist as "webby FDOs" side by side with "traditional" FDOs, with some additional requirements for the persistent identifiers.
 
 ## Acknowledgements
-The work corresponding to the ZB MED SemTec team pages has been partially supported by the NFDI4DataScience project funded by the German Research Foundation (DFG) (no. 460234259), and the FAIR-Impact GA 101057344 Support Action #2: Enabling FAIR Signposting and RO-Crate for content/metadata discovery and consumption. Work corresponding to the Senckenberg team has been partially supported by Biodiversity Digital Twin for Advanced Modelling, Simulation and Prediction Capabilities ([BioDT](https://biodt.eu)) (Horizon Europe, GA no. 101057437), and [NFDI4Earth](https://www.nfdi4earth.de/) - NFDI Consortium Earth System Sciences (DFG, no. 460036893).
 
-We also acknowledge the ELIXIR BioHackathon Europe 2023
+The work corresponding to the ZB MED SemTec team pages has been partially supported by the NFDI4DataScience project funded by the German Research Foundation (DFG) (no. 460234259), and the FAIR-Impact GA 101057344 Support Action #2: Enabling FAIR Signposting and RO-Crate for content/metadata discovery and consumption. Work corresponding to the Senckenberg team has been partially supported by Biodiversity Digital Twin for Advanced Modelling, Simulation and Prediction Capabilities ([BioDT](https://biodt.eu/)) (Horizon Europe, GA no. 101057437), and [NFDI4Earth](https://www.nfdi4earth.de/) - NFDI Consortium Earth System Sciences (DFG, no. 460036893). Work with handles has been supported by UK Research and Innovation (UKRI) under the UK government's Horizon Europe funding guarantee for 10038930 ([BioDT](https://biodt.eu/)) 10038963 ([EuroScienceGateway](https://eurosciencegateway.eu/)), 10038992 ([FAIR-IMPACT](http://fair-impact.eu/)) and by Horizon Europe GA 101046203 ([BY-COVID](https://by-covid.org/)).
+
+We also acknowledge the many ELIXIR BioHackathon Europe 2023 participants we interacted with.
 
 
 
