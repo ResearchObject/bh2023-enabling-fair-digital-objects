@@ -65,7 +65,7 @@ authors_short: Stian Soiland-Reyes \emph{et al.}
 
 As part of the BioHackathon Europe 2023, we here report from the progress of the hackathon project #15: "Enabling FAIR Digital Objects with RO-Crate, Signposting and Bioschemas". 
 
-[RO-Crate](https://www.researchobject.org/ro-crate/) [@citesAsAuthority:10.3233/ds-210053] is a lightweight method to package research outputs along with their metadata. [Bioschemas](https://bioschemas.org/) [@citesAsAuthority:Bioschemas] provides metadata schemas to add structured metadata to webpages on Life Science. [Signposting](https://signposting.org/FAIR/) [@citesAsAuthority:vandesompelFAIRSignpostingProfile2022] [@extends:vandesompel2015]  provides a lightweight yet powerful approach to increase the FAIRness of scholarly objects.
+[RO-Crate](https://www.researchobject.org/ro-crate/) [@citesAsAuthority:10.3233/ds-210053] is a lightweight method to package research outputs along with their metadata. [Bioschemas](https://bioschemas.org/) [@citesAsAuthority:Bioschemas] provides metadata schemas to add structured metadata to webpages on Life Science. [Signposting](https://signposting.org/FAIR/) [@citesAsAuthority:vandesompelFAIRSignpostingProfile2022] [@extends:vandesompel2015]  provides a lightweight yet powerful approach to increase the FAIRness of scholarly objects. [FAIR Digital Object](https://fairdo.org/specifications/) [@citesAsAuthority:fdo-Overview] (FDO) is a set of conceptual specifications for building an interoperable ecosystem of machine-actionable resources, with a strong emphasis on persistent identifiers, types and metadata.
 
 The combination of RO-Crates, Bioschemas and Signposting make resources easy to navigate by machines, provide an unambiguous way for machines to access FAIR metadata and content in a single request, and reduce content-negotiation hassle that can give unpredictable results [@citesAsAuthority:10.3897/rio.8.e93937].
 
@@ -94,9 +94,9 @@ Our initial plan was to work in several parallell streams:
 
 Given the participants joining this hackathon project, we focused on three topics:
 
-1. Adding and visualising Signposting to existing resources: two repositories () and a web site. 
-2. Adding RO-Crate to existing resources, a repository and a website
-3. Explore using an FDO/Web hybrid with persistent identifers as Handles.
+1. Adding and visualising Signposting to existing resources: two repositories ([HoloFood Data Portal](www.holofooddata.org), [Wildlive data portal](https://wildlive.senckenberg.de/)) using HTTP signposting, and a GitHub Pages-based web site ([ZBMed SemTec](https://zbmed-semtec.github.io/)) using HTML signposting. 
+2. Adding RO-Crate to existing resources (Wildlive data portal and ZBMed SemTec website)
+3. Explore making an Handle/Web hybrid FDO with persistent identifers (Wildlive data portal).
 
 ## Visualising Signposting
 
