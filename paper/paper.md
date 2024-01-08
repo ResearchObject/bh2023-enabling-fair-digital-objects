@@ -80,74 +80,23 @@ Finally, FAIR outreach practitioners showcase uses of FAIR Signposting to naviga
 
 # Initial plan
 
-* Add metadata markup/headers to landing pages of at least one website
-  - Drop-in for anyone to add FAIR Signposting for existing persistent identifiers and metadata resources
-  - Drop-in for adding Bioschemas metadata to website
-  - Drop-in for RO-Crate support  
-* Improve at least one Signposting client
-  - https://signposting.readthedocs.io/ (Python)
-  - https://github.com/markwilkinson/linkheader-processor (Ruby)
-  - Javascript?
-  - Java/Jena?
-  - Your language!
-* Improve Bioschemas/RO-Crate validation for at least one profile (working with [#7](../17/))
+Our initial plan was to work in several parallell streams:
+
+* Add metadata markup/headers to landing pages of at least one website. This was also intended as a drop-in anyone at the Hackathon to add FAIR Signposting. Bioschemas metadata or RO-Crate for existing persistent identifiers and metadata resources.  
+* Improve at least one Signposting client, e.g. [Signposting for Python](https://signposting.readthedocs.io/), [for Ruby](https://github.com/markwilkinson/linkheader-processor) or a new client for JavaScript or Java.
+* Improve Bioschemas/RO-Crate validation for at least one profile
 * Prototype FAIR Digital Object (FDO) implementation using Signposting, PIDs and RO-Crate
 * Conceptualise and draft FDO "configuration type" profile for Signposting-based FDO implementation
-* Write up a BioHackrXiv preprint!
-* Other ideas
-  -  Prototype a knowledge graph from pages using any of the technologies (working with [#7](../17/))
-  -  Build a validator for FAIR Signposting level 1, then level 2 - may be based on https://github.com/stain/signposting/ 
+* Other ideas included prototyping a knowledge graph from pages using any of the technologies, or to build a validator for FAIR Signposting.
 
-<!-- Markdown tips below:
-
-# Formatting
-
-This document use Markdown and you can look at [this tutorial](https://www.markdowntutorial.com/).
-
-## Subsection level 2
-
-Please keep sections to a maximum of only two levels.
-
-## Tables and figures
-
-Tables can be added in the following way, though alternatives are possible:
-
-| Header 1 | Header 2 |
-| -------- | -------- |
-| item 1 | item 2 |
-| item 3 | item 4 |
-
-Table: Note that table caption is automatically numbered.
-
-A figure is added with:
-
-![Caption for BioHackrXiv logo figure](./biohackrxiv.png)
-
-# Other main section on your manuscript level 1
-
-Lists can be added with:
-
-1. Item 1
-2. Item 2
-
-# Citation Typing Ontology annotation
-
-You can use CiTO annotations, as explained in [this BioHackathon Europe 2021 write up](https://raw.githubusercontent.com/biohackrxiv/bhxiv-metadata/main/doc/elixir_biohackathon2021/paper.md) and [this CiTO Pilot](https://www.biomedcentral.com/collections/cito).
-Using this template, you can cite an article and indicate why you cite that article, for instance DisGeNET-RDF [@citesAsAuthority:Queralt2016].
-
-Possible CiTO typing annotation include:
-
-* citesAsDataSource: when you point the reader to a source of data which may explain a claim
-* usesDataFrom: when you reuse somehow (and elaborate on) the data in the cited entity
-* usesMethodIn
-* citesAsAuthority
-* discusses
-* extends
-* agreesWith
-* disagreesWith
--->
 
 # Results
+
+Given the participant in this project we focused on three main streams:
+
+1. Adding and visualising Signposting to existing resources: two repositories and a web site. 
+2. Adding RO-Crate to existing resources, a repository and a website
+3. Explore using an FDO/Web hybrid with persistent identifers as Handles.
 
 ## Visualising Signposting
 Signposting is explicitly designed to add machine-readable links to the metadata associated with a human-readable scholarly object.
@@ -239,9 +188,9 @@ With this, we managed to add Signposting HTTP headers to an existing SPA-based d
 
 ![Schematic overview of how Signposting headers are added to the HTTP response in NGINX](./figures/signposting-nginx-architecture.png)
 
-Figure 2: Schematic overview of how Signposting headers are added to the HTTP response in NGINX
 
 ## Implementing RO Crates and Sigposting in GitHub pages
+
 The [Semantic Technologies (SemTec) team](https://zbmed-semtec.github.io/) in [ZB MED](https://www.zbmed.de/en/) uses GitHub pages to share research projects and corresponding research artefacts/outcomes (e.g., datasets, software, metadata schemas/ontologies, posters, reports, preprints, scholarly publications). The pages embed Bioschemas and [schema.org](https://schema.org/) markup to facilitate findability and connectivity of the research outcomes. The goal behind implementing RO-Crates and Signposting is supporting a lightweight approach to FAIR Digital Objects (FDOs) [@citesAsPotentialSolution:Soiland_FDO_2022] [@citesAsPotentialSolution:Castro_FDO_2023]. The FDO approach [@citesAsAuthority:Smedt_FDO_2020] corresponds to a series of recommendations to increase and extend FAIRness to cover typed operations, allowing implementation via different compliant configurations [@citesAsAuthority:Lannon_FDOConfig_2022]. This work was initiated as part of a FAIR-Impact Support Action and advanced to an initial implementation during the BioHackathon. As a result, the SemTec team now supports RO-crates for research projects and theses with Signposting level 2.
 
 # Conclusion and Future Work
@@ -254,6 +203,6 @@ We also acknowledge the ELIXIR BioHackathon Europe 2023
 
 
 
-## References
+# References
 <!-- see paper.bib -->
 
