@@ -102,7 +102,7 @@ Given the participants joining this hackathon project, we focused on three topic
 
 [Signposting](https://signposting.org/) is explicitly designed to add machine-readable links to the metadata associated with a human-readable scholarly object.
 Taking the canonical example of a web landing page for a dataset, which humans parse as rendered HTML, Signposting adds invisible links to remote resources like an ORCID profile of the author, a DOI the resource can be cited as, and downloadable items of the dataset like images and data tables.
-These are implemented as HTTP headers (`Link: <https://orcid.org/0000…">; rel="author"`) or HTML header link tags (`<link href="https://doi.org/10.5281/zenodo…" rel="item" type="application/zip"/>`).
+These are implemented as HTTP headers (`Link: <https://orcid.org/0000…>; rel="author"`) or HTML header link tags (`<link href="https://doi.org/10.5281/zenodo…" rel="item" type="application/zip"/>`).
 
 Typically, these implementations do not render anything that a user of the landing page will see (without using developer tools to inspect the source of the material they're viewing).
 This means that resource authors and developers need to use debugging tools to develop and test their implementations of Signposting: for example browser developer tools, or bespoke parsers for the Signposting headers [@citesAsPotentialSolution:Signposting_link_parser].
@@ -113,7 +113,7 @@ This helps resource developers to quickly verify their Signposting implementatio
 
 As an experiment we modified the [HoloFood Data Portal](www.holofooddata.org) to include Signposting HTTP headers to its own API exposure of JSON metadata. As these are following the [site-specific OpenAPI](https://www.holofooddata.org/api/openapi.json) we used this as the `profile` identifier. This is an example of how Signposting can help machine-clients navigate from human-readable web-pages to machine-readable APIs even if no further FAIRifications have not yet been applied (e.g. persistent identifiers, metadata following common vocabularies), in effect making a "level 0" FDO.
 
-![The HoloFood Data Portal (www.holofooddata.org) now includes machine-readable Signposting links directing clients to the API for a JSON description of the each Sample as well as the collection to which the Sample belongs. The browser extension is shown here rendering these Signposts to the user.](./figures/signposting-browser-extension.jpg)
+![Browser extension showing detected Signposting. The HoloFood Data Portal (www.holofooddata.org) now includes machine-readable Signposting links directing clients to the API for a JSON description of the each Sample as well as the collection to which the Sample belongs. The browser extension is shown here rendering these Signposts to the user.](./figures/signposting-browser-extension.jpg)
 
 
 ## Indexing RO Crates in backend databases
@@ -141,7 +141,7 @@ If a data repository needed to index this dataset, for listing, searching and cr
 | 1   | My Dataset      | http://my.code | http://my.data/dataset/1 | http://my.data/dataset/1?format=ro_crate |
 
 where † = columns indexed by the database engine, to allow lookups with scanning the entire table.
-In most relational database engines, this kind of indexing is required for realtime lookups of "all the datasets created by a certain pipeline".
+In most relational database engines, this kind of indexing is required for realtime lookups of _"all the datasets created by a certain pipeline"_.
 
 During BioHackathon Europe 2023, we explored the possibility of using relational database's JSON fields (which are now a stable feature of engines such as [PostgreSQL](https://www.postgresql.org/docs/current/functions-json.html)) to create an equivalent database schema working directly on the RO-Crate JSON-LD.
 
@@ -157,7 +157,7 @@ The table schema was:
 | 1    | `{"@graph": [{"@id": "./"...` | My Dataset    |
 
 We used this schema to explore two approaches to querying this table of crates.
-Firstly, we used a feature of the fortchoming [Django 5.0 release](https://docs.djangoproject.com/en/dev/releases/5.0/#database-generated-model-field): `GeneratedField`s.
+Firstly, we used a feature of the fortchoming [Django 5.0 release](https://docs.djangoproject.com/en/dev/releases/5.0/#database-generated-model-field): `GeneratedField`.
 Generated Fields allow the ORM model to have a schema like:
 
 ```python
@@ -185,7 +185,7 @@ Senckenberg has brought their [Wildlive data portal](https://wildlive.senckenber
 
 The implementation of this RO-Crate layer on top of the existing data portal was rather straightforward. In contrast, the implementation of Signposting required more work and shall be explained in more detail here.
 
-The difficulty in adding Signposting to the Wildlive data portal was in that the portal was built as a [Single Page Application](https://en.wikipedia.org/wiki/Single-page_application)(SPA), based on [VueJS](https://vuejs.org/). This means that upon a request from a client (usually a web browser), the server returns a generic, static HTML file and JavaScript code. Afterwards, the code is executed in the browser and the content-specific data is loaded asynchronously via API calls to the backend of the application. To implement Signposting, links to related web resources of a website can either be added to the HTML header or to the header of the HTTP response of the server. However, to add these links, content-specific metadata is required which is not yet available when the server initially answers the client's request.
+The difficulty in adding Signposting to the Wildlive data portal was in that the portal was built as a [Single Page Application](https://en.wikipedia.org/wiki/Single-page_application) (SPA), based on [VueJS](https://vuejs.org/). This means that upon a request from a client (usually a web browser), the server returns a generic, static HTML file and JavaScript code. Afterwards, the code is executed in the browser and the content-specific data is loaded asynchronously via API calls to the backend of the application. To implement Signposting, links to related web resources of a website can either be added to the HTML header or to the header of the HTTP response of the server. However, to add these links, content-specific metadata is required which is not yet available when the server initially answers the client's request.
 
 This problem is comparable to the problem that many SPA-based websites have which seek to add specific metadata markup to their websites HTML to achieve search engine optimization. Typical solutions to this problem are the implementation of a server-side rendering or pre-rendering step based on an additional NodeJS-based webserver in the backend of the application. During this step, some parts or all of the HTML are being rendered on the side of the server (which allows to add metadata markup e.g. for search engine crawlers but also for Signposting), before the SPA is delivered to the client.
 
@@ -206,12 +206,12 @@ As an experiment of a hybrid deployment of FDOs with a Signposting/RO-Crate over
 
 The handle <https://hdl.handle.net/21.T11998/wildlive.7df91e6d148a386cc674> was minted manually using the EOSC B2Handle test service. Senckenberg plans to deploy their own Handle server to mint persistent identifiers automatically for every digital object using their own Handle prefix and Cordra's Handle support.  From the FDO principle that metadata FDOs can be separate from the main FDO, a separate handle <https://hdl.handle.net/21.T11998/wildlive.crate.7df91e6d148a386cc674> was registered for the corresponding RO-Crate. 
 
-![HTML preview rendering of the Wildlive RO-Crate for a capture event. Each observation event is listed as `hasPart` and described further.](./figures/signposting-crate.png)
+![HTML preview rendering of the Wildlive RO-Crate for a capture event. Each observation event is listed as `hasPart` and described further.](./figures/senkcenberg-crate.png)
 
 Another reason for having a separate PID for the RO-Crate is that it is on higher level than the fairly granular digital objects underlying it, for instance in the traditional Digital Object JSON APIs for <https://wildlive.senckenberg.de/api/objects/wildlive/7df91e6d148a386cc674> we have implied references to `wildlive/38a8bb080a5e48fdd309` (aka <https://wildlive.senckenberg.de/api/objects/wildlive/38a8bb080a5e48fdd309>) as nested objects for each observation, which then again has an image object <https://wildlive.senckenberg.de/api/objects/wildlive/ffafa0893d4a2af6d0ba>. However in the corresponding RO-Crate, all of these objects are described together, avoiding multiple API calls.  
 
 
-![The same crate also describes nested objects, such as the taxon for identifying species.](./figures/signposting-taxon.png).
+![The same crate also describes nested objects, such as the taxon for identifying species.](./figures/senkcenberg-taxon.png).
 
 It is notable that in Senckenberg's particular case, the JSON of the FDO objects in the API are already also valid JSON-LD, but using a mixture of vocabularies mapped from a [JSON context](https://wildlive.senckenberg.de/api/objects/wildlive/basecontext.jsonld), including [Darwin Core](https://dwc.tdwg.org/) and [Semantic Sensor Network Ontology](https://www.w3.org/TR/vocab-ssn/). In this case the RO-Crate is an example of a higher-level mapping using a common vocabulary (schema.org), with an domain-specific API co-existing for when additional details are needed.
 
@@ -220,7 +220,7 @@ In a completed hybrid FDO implementation, each of these nested objects would aga
 In this experiment we identified some issues with the Handle/FDO approach: 
 
 1. Unclear which Handle property to use to indicate fdo profile. `fdoProfile` was chosen, in correspondance with the DISSCo kernel attributes [@citesAsAuthority:dissco-kernel], and stored at handle index `1`. The profile is pointing to <https://w3id.org/ro/crate> which is registered in the [IANA profile registry](https://www.iana.org/assignments/profile-uris/) and corresponds to the `profile=` signposting parameter.  Ideally the key for this should itstead be a full PID or defined by the FDO specification, for comparison the [BioDT Kernel attributes](https://github.com/BioDT/biodt-fair/discussions/3) are defining the key `profile` but also in index `1`.
-2. Requesting the B2Handle service from the [EOSC marketplace](https://marketplace.eosc-portal.eu/services/eosc.eudat.b2handle) ws very slow, taking several weeks before the hackathon, only to be given access to a buggy test prefix server with various SSL deployment problems and inability to update a handle after registration. The B2Handle helpdesk was however very helpful.
+2. Requesting the B2Handle service from the [EOSC marketplace](https://marketplace.eosc-portal.eu/services/eosc.eudat.b2handle) was very slow, taking several weeks before the hackathon, only to be given access to a buggy test prefix server with various SSL deployment problems and inability to update a handle after registration. The B2Handle helpdesk was however very helpful.
 3. Unclear if index in the Handle record matters -- both DiSSCO and BioDT use the indexes as a way to organize the keys, but these can of course then be in conflict.
 4. Unclear how much of the FDO metadata should be duplicated in the handle. We didn't experiment with mapping and registering the full DiSSCO or BioDT handle kernel information, but stayed at a Signposting-like level of persistent identifiers, metadata resources, and profiles of those.
 
@@ -234,7 +234,7 @@ Lessons learnt include:
 
 ## Implementing RO Crates and Sigposting in GitHub pages
 
-The [Semantic Technologies (SemTec) team](https://zbmed-semtec.github.io/) in [ZB MED](https://www.zbmed.de/en/) uses GitHub pages to share research projects and corresponding research artefacts/outcomes (e.g., datasets, software, metadata schemas/ontologies, posters, reports, preprints, scholarly publications). The pages embed Bioschemas and [schema.org](https://schema.org/) markup to facilitate findability and connectivity of the research outcomes. The goal behind implementing RO-Crates and Signposting is supporting a lightweight approach to FDOs [@citesAsPotentialSolution:soiland_FDO_2022] [@citesAsPotentialSolution:Castro_FDO_2023]. The FDO approach [@citesAsAuthority:Smedt_FDO_2020] corresponds to a series of recommendations to increase and extend FAIRness to cover typed operations, allowing implementation via different compliant configurations [@citesAsAuthority:fdo-ConfigurationTypes]. This work was initiated as part of a FAIR-Impact Support Action and advanced to an initial implementation during the BioHackathon. As a result, the SemTec team now supports RO-crates for research projects and theses with Signposting level 2.
+The [Semantic Technologies (SemTec) team](https://zbmed-semtec.github.io/) in [ZB MED](https://www.zbmed.de/en/) uses GitHub pages to share research projects and corresponding research artefacts/outcomes (e.g., datasets, software, metadata schemas/ontologies, posters, reports, preprints, scholarly publications). The pages embed Bioschemas and [schema.org](https://schema.org/) markup to facilitate findability and connectivity of the research outcomes. The goal behind implementing RO-Crates and Signposting is supporting a lightweight approach to FDOs [@citesAsPotentialSolution:soiland_FDO_2022] [@citesAsPotentialSolution:Castro_FDO_2023]. The FDO approach [@citesAsAuthority:Smedt_FDO_2020] corresponds to a series of recommendations to increase and extend FAIRness to cover typed operations, allowing implementation via different compliant configurations [@citesAsAuthority:fdo-ConfigurationTypes]. This work was initiated as part of a FAIR-Impact Support Action and advanced to an initial implementation during the BioHackathon. As a result, the SemTec team now supports RO-Crates for research projects and theses with Signposting level 2.
 
 ![ZBMed web page with HTML Signposting to the RO-Crate metadata file along with the Bioschemas JSON-LD.](./figures/signposting-zbmed.png)
 
@@ -242,7 +242,7 @@ For instance, the page <https://zbmed-semtec.github.io/projects/2022_maSMP/> has
 
 # Conclusion and Future Work
 
-We have presented here various approaches to implement RO-Crates and Signposting, some of them also supporting Bioschemas markup. This combination aims at improving interoperability and reusability. The ZB MED SemTec team will get permanent, unique and global identifiers for the RO-Crates and the corresponding GitHub pages to improve FDO compliance, it will also add software to the research artefacts implementing RO-crate. The experiments with hybruid FDOs show how Signposting and RO-Crate can co-exist as "webby FDOs" side by side with "traditional" FDOs, with some additional requirements for the persistent identifiers.
+We have presented here various approaches to implement RO-Crates and Signposting, some of them also supporting Bioschemas markup. This combination aims at improving interoperability and reusability. The ZB MED SemTec team will get permanent, unique and global identifiers for the RO-Crates and the corresponding GitHub pages to improve FDO compliance, it will also add software to the research artefacts implementing RO-Crate. The experiments with hybruid FDOs show how Signposting and RO-Crate can co-exist as "webby FDOs" side by side with "traditional" FDOs, with some additional requirements for the persistent identifiers.
 
 ## Acknowledgements
 
